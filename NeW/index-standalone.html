@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sporty Fitness Dashboard - Sensor Configuration</title>
+    <link rel="stylesheet" href="styles-standalone.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="navbar-brand">
+                    <h2>Sporty Fitness</h2>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#" data-page="dashboard" class="nav-link active">Dashboard</a></li>
+                    <li><a href="#" data-page="realtime" class="nav-link">Realtime</a></li>
+                    <li><a href="#" data-page="sensors" class="nav-link">Sensors</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h1>Main Dashboard</h1>
+                    <p class="subtitle">Monitor your fitness metrics and health data</p>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background-color: #FF7601;">❤️</div>
+                        <div class="metric-content">
+                            <h3>Heart Rate</h3>
+                            <p class="metric-value">72 BPM</p>
+                            <p class="metric-label">Last recorded</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background-color: #00809D;">🌡️</div>
+                        <div class="metric-content">
+                            <h3>Temperature</h3>
+                            <p class="metric-value">36.8°C</p>
+                            <p class="metric-label">Normal</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background-color: #F3A26D;">📍</div>
+                        <div class="metric-content">
+                            <h3>Steps</h3>
+                            <p class="metric-value">8,234</p>
+                            <p class="metric-label">Today</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background-color: #00809D;">⚡</div>
+                        <div class="metric-content">
+                            <h3>Calories</h3>
+                            <p class="metric-value">425</p>
+                            <p class="metric-label">Burned</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Realtime Page -->
+            <div id="page-realtime" class="page">
+                <div class="page-header">
+                    <h1>Realtime Monitoring</h1>
+                    <p class="subtitle">Live health data from your sensors</p>
+                </div>
+                <div class="realtime-grid">
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <h3>Heart Rate Monitor</h3>
+                            <span class="status-badge connected">● Connected</span>
+                        </div>
+                        <div class="chart-placeholder">
+                            <svg viewBox="0 0 300 100" class="pulse-chart">
+                                <polyline points="0,60 30,45 60,50 90,40 120,55 150,35 180,50 210,45 240,60 270,50 300,55" 
+                                    fill="none" stroke="#FF7601" stroke-width="2" vector-effect="non-scaling-stroke"/>
+                            </svg>
+                        </div>
+                        <div class="reading">
+                            <span class="value">72</span>
+                            <span class="unit">BPM</span>
+                        </div>
+                    </div>
+
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <h3>Temperature Sensor</h3>
+                            <span class="status-badge connected">● Connected</span>
+                        </div>
+                        <div class="chart-placeholder">
+                            <svg viewBox="0 0 300 100" class="temp-chart">
+                                <polyline points="0,50 50,48 100,52 150,50 200,48 250,52 300,50" 
+                                    fill="none" stroke="#00809D" stroke-width="2" vector-effect="non-scaling-stroke"/>
+                            </svg>
+                        </div>
+                        <div class="reading">
+                            <span class="value">36.8</span>
+                            <span class="unit">°C</span>
+                        </div>
+                    </div>
+
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <h3>Gyroscope</h3>
+                            <span class="status-badge disconnected">● Disconnected</span>
+                        </div>
+                        <div class="chart-placeholder disconnected-chart">
+                            <p>No data available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor Configuration Page -->
+            <div id="page-sensors" class="page">
+                <div class="page-header">
+                    <h1>Sensor Configuration</h1>
+                    <p class="subtitle">Manage and configure your connected sensors</p>
+                </div>
+
+                <!-- Desktop: Sidebar + Workspace -->
+                <div class="sensor-layout">
+                    <aside class="sensor-sidebar">
+                        <div class="sidebar-section">
+                            <h3 class="section-title group-title">Group Sensors</h3>
+                            <div class="template-list" id="groupTemplates">
+                                <!-- Templates will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="sidebar-section">
+                            <h3 class="section-title individual-title">Individual Sensors</h3>
+                            <div class="template-list" id="individualTemplates">
+                                <!-- Templates will be inserted here -->
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Workspace -->
+                    <div class="sensor-workspace">
+                        <div id="desktopWorkspace" class="desktop-workspace">
+                            <div class="empty-state">
+                                <div class="empty-icon">📍</div>
+                                <p>Drag sensors here to configure</p>
+                            </div>
+                            <div id="sensorNodesContainer" class="sensor-nodes"></div>
+                        </div>
+
+                        <!-- Mobile Grid -->
+                        <div id="mobileGrid" class="mobile-grid">
+                            <div id="addSensorButton" class="add-sensor-btn">
+                                <span>+ Add Sensor</span>
+                            </div>
+                            <div id="mobileMenu" class="mobile-menu hidden">
+                                <div class="mobile-menu-content">
+                                    <h4 class="menu-section-title">Group Sensors</h4>
+                                    <div class="mobile-template-grid" id="mobileGroupTemplates"></div>
+                                    
+                                    <h4 class="menu-section-title">Individual Sensors</h4>
+                                    <div class="mobile-template-grid" id="mobileIndividualTemplates"></div>
+                                </div>
+                            </div>
+                            <div id="puzzleGrid" class="puzzle-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app-standalone.js"></script>
+</body>
+</html>
