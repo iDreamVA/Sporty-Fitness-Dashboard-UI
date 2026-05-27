@@ -15,11 +15,11 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <nav className="bg-[#fffef5] dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-[#00809D] via-[#FF7601] to-[#F3A26D] bg-clip-text text-transparent">
+            <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-[#51553a] via-[#7a8a45] to-[#a0b868] bg-clip-text text-transparent">
               {t.appTitle}
             </h1>
           </div>
@@ -35,8 +35,8 @@ export function Navigation() {
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg transition-colors text-sm lg:text-base ${
                       isActive
-                        ? 'bg-[#00809D]/20 text-[#00809D] border border-[#00809D]/30'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-[#00809D] hover:bg-gray-50 dark:hover:bg-gray-800'
+                        ? 'bg-[#51553a]/20 text-[#51553a] border border-[#51553a]/30'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-[#51553a] hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`
                   }
                 >
@@ -46,25 +46,26 @@ export function Navigation() {
               );
             })}
 
-            <button
+            {/* Theme toggle hidden temporarily */}
+            {/* <button
               onClick={toggleTheme}
               className="flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg border border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Moon className="w-4 h-4 text-[#00809D]" />
+                <Moon className="w-4 h-4 text-[#51553a]" />
               ) : (
-                <Sun className="w-4 h-4 text-[#FF7601]" />
+                <Sun className="w-4 h-4 text-[#7a8a45]" />
               )}
-            </button>
+            </button> */}
 
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-2 bg-[#00809D]/20 px-3 lg:px-4 py-2 rounded-lg border border-[#00809D]/30 hover:bg-[#00809D]/30 transition-colors"
+              className="flex items-center gap-2 bg-[#51553a]/20 px-3 lg:px-4 py-2 rounded-lg border border-[#51553a]/30 hover:bg-[#51553a]/30 transition-colors"
               aria-label="Toggle language"
             >
-              <Languages className="w-4 h-4 text-[#00809D]" />
-              <span className="text-[#00809D] text-sm font-semibold hidden lg:inline">
+              <Languages className="w-4 h-4 text-[#51553a]" />
+              <span className="text-[#51553a] text-sm font-semibold hidden lg:inline">
                 {language === 'en' ? 'ENG' : 'ไทย'}
               </span>
             </button>
@@ -77,19 +78,20 @@ export function Navigation() {
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
               aria-label="Toggle language"
             >
-              <Languages className="w-5 h-5 text-[#00809D]" />
+              <Languages className="w-5 h-5 text-[#51553a]" />
             </button>
-            <button
+            {/* Theme toggle hidden temporarily */}
+            {/* <button
               onClick={toggleTheme}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Moon className="w-5 h-5 text-[#00809D]" />
+                <Moon className="w-5 h-5 text-[#51553a]" />
               ) : (
-                <Sun className="w-5 h-5 text-[#FF7601]" />
+                <Sun className="w-5 h-5 text-[#7a8a45]" />
               )}
-            </button>
+            </button> */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
@@ -114,8 +116,8 @@ export function Navigation() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                         isActive
-                          ? 'bg-[#00809D]/20 text-[#00809D] border border-[#00809D]/30'
-                          : 'text-gray-600 dark:text-gray-300 hover:text-[#00809D] hover:bg-gray-50 dark:hover:bg-gray-800'
+                          ? 'bg-[#51553a]/20 text-[#51553a] border border-[#51553a]/30'
+                          : 'text-gray-600 dark:text-gray-300 hover:text-[#51553a] hover:bg-gray-50 dark:hover:bg-gray-800'
                       }`
                     }
                   >

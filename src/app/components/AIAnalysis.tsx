@@ -27,11 +27,11 @@ export function AIAnalysis({ insights, title = 'AI Running Form Analysis' }: AIA
   const getColor = (type: string) => {
     switch (type) {
       case 'success':
-        return 'text-[#00809D]';
+        return 'text-[#51553a]';
       case 'warning':
-        return 'text-[#FF7601]';
+        return 'text-[#7a8a45]';
       default:
-        return 'text-[#F3A26D]';
+        return 'text-[#a0b868]';
     }
   };
 
@@ -44,7 +44,7 @@ export function AIAnalysis({ insights, title = 'AI Running Form Analysis' }: AIA
     >
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 rounded-lg" style={{ backgroundColor: 'rgba(0, 128, 157, 0.2)' }}>
-          <Brain className="w-6 h-6" style={{ color: '#00809D' }} />
+          <Brain className="w-6 h-6" style={{ color: '#51553a' }} />
         </div>
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
       </div>
@@ -86,10 +86,10 @@ export function AIAnalysis({ insights, title = 'AI Running Form Analysis' }: AIA
                 animate={{ width: '85%' }}
                 transition={{ delay: 0.6, duration: 1 }}
                 className="h-full"
-                style={{ background: 'linear-gradient(to right, #00809D, #F3A26D)' }}
+                style={{ background: 'linear-gradient(to right, #51553a, #a0b868)' }}
               />
             </div>
-            <span className="font-bold" style={{ color: '#00809D' }}>85%</span>
+            <span className="font-bold" style={{ color: '#51553a' }}>85%</span>
           </div>
         </div>
       </div>

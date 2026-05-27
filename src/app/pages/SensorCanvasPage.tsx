@@ -27,28 +27,28 @@ interface SensorTemplate {
 }
 
 const SENSOR_TEMPLATES: SensorTemplate[] = [
-  { type: 'temperature', label: 'Temperature', icon: Thermometer, color: '#FF7601' },
-  { type: 'gyroscope', label: 'Gyroscope', icon: Gauge, color: '#00809D' },
-  { type: 'heartRate', label: 'Heart Rate', icon: Activity, color: '#F3A26D' },
+  { type: 'temperature', label: 'Temperature', icon: Thermometer, color: '#7a8a45' },
+  { type: 'gyroscope', label: 'Gyroscope', icon: Gauge, color: '#51553a' },
+  { type: 'heartRate', label: 'Heart Rate', icon: Activity, color: '#a0b868' },
   {
     type: 'armGroup',
     label: 'Arm Sensors',
     icon: Activity,
-    color: '#00809D',
+    color: '#51553a',
     group: 'arm',
   },
   {
     type: 'backGroup',
     label: 'Back Sensors',
     icon: Activity,
-    color: '#FF7601',
+    color: '#7a8a45',
     group: 'back',
   },
   {
     type: 'legGroup',
     label: 'Leg Sensors',
     icon: Activity,
-    color: '#F3A26D',
+    color: '#a0b868',
     group: 'leg',
   },
 ];
@@ -171,7 +171,7 @@ function SensorNodeCard({
         onClick={() => onToggleConnection(node.id)}
         className={`w-full flex items-center justify-center gap-2 py-2 rounded-lg transition-all ${
           node.connected
-            ? 'bg-[#00809D]/20 text-[#00809D] border border-[#00809D]/30'
+            ? 'bg-[#51553a]/20 text-[#51553a] border border-[#51553a]/30'
             : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500 border border-gray-200 dark:border-zinc-700'
         }`}
       >
@@ -318,7 +318,7 @@ function MobilePuzzleGrid({
       <motion.button
         whileTap={{ scale: 0.98 }}
         onClick={onAddSensorClick}
-        className="w-full py-4 px-4 bg-gradient-to-r from-[#00809D] to-[#FF7601] rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg"
+        className="w-full py-4 px-4 bg-gradient-to-r from-[#51553a] to-[#7a8a45] rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg"
       >
         <Plus className="w-5 h-5" />
         <span>Add Sensor</span>
@@ -546,7 +546,7 @@ export function SensorCanvasPage() {
 
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-4 pb-20">
+      <div className="min-h-screen bg-gradient-to-br from-[#fffef5] to-[#f0ede0] dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-4 pb-20">
         <div className="max-w-md mx-auto">
           <header className="mb-6">
             <h1 className="text-2xl font-bold mb-1">{t.sensors.title}</h1>
@@ -578,7 +578,7 @@ export function SensorCanvasPage() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-6">
+      <div className="min-h-screen bg-gradient-to-br from-[#fffef5] to-[#f0ede0] dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-6">
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
             <h1 className="text-3xl font-bold mb-2">{t.sensors.title}</h1>
@@ -590,7 +590,7 @@ export function SensorCanvasPage() {
             <div className="w-72 space-y-6">
               {/* Group Nodes */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-[#00809D]">
+                <h3 className="text-lg font-semibold mb-4 text-[#51553a]">
                   {t.sensors.groupNodes}
                 </h3>
                 <div className="space-y-3">
@@ -602,7 +602,7 @@ export function SensorCanvasPage() {
 
               {/* Individual Nodes */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-[#FF7601]">
+                <h3 className="text-lg font-semibold mb-4 text-[#7a8a45]">
                   {t.sensors.individualNodes}
                 </h3>
                 <div className="space-y-3">

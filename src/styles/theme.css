@@ -2,9 +2,9 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
+  --background: #fffef5;
   --foreground: oklch(0.145 0 0);
-  --card: #ffffff;
+  --card: #fffef5;
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -41,10 +41,10 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Custom LOFA colors */
-  --lofa-teal: #00809D;
+  --lofa-teal: #51553a;
   --lofa-cream: #FCECDD;
-  --lofa-orange: #FF7601;
-  --lofa-peach: #F3A26D;
+  --lofa-orange: #7a8a45;
+  --lofa-peach: #a0b868;
 }
 
 .dark {
