@@ -53,7 +53,7 @@ const SENSOR_TEMPLATES: SensorTemplate[] = [
   },
 ];
 
-function SensorTemplate({ template }: { template: SensorTemplate }) {
+function SensorTemplateCard({ template }: { template: SensorTemplate }) {
   const { t } = useApp();
   const Icon = template.icon;
 
@@ -78,8 +78,8 @@ function SensorTemplate({ template }: { template: SensorTemplate }) {
     <motion.div
       ref={drag}
       whileHover={{ scale: 1.05 }}
-      className={`p-4 bg-zinc-800 border-2 rounded-lg cursor-move transition-all ${
-        isDragging ? 'opacity-50 border-dashed' : 'border-zinc-700'
+      className={`p-4 bg-gray-50 dark:bg-zinc-800 border-2 rounded-lg cursor-move transition-all shadow-sm ${
+        isDragging ? 'opacity-50 border-dashed' : 'border-gray-200 dark:border-zinc-700'
       }`}
       style={{
         borderColor: isDragging ? template.color : undefined,
@@ -93,9 +93,9 @@ function SensorTemplate({ template }: { template: SensorTemplate }) {
           <Icon className="w-5 h-5" style={{ color: template.color }} />
         </div>
         <div className="flex-1">
-          <div className="font-medium text-sm">{labelMap[template.type] || template.label}</div>
+          <div className="font-medium text-sm text-gray-900 dark:text-white">{labelMap[template.type] || template.label}</div>
           {template.group && (
-            <div className="text-xs text-zinc-500 capitalize">{template.group}</div>
+            <div className="text-xs text-gray-400 dark:text-zinc-500 capitalize">{template.group}</div>
           )}
         </div>
       </div>
@@ -103,7 +103,7 @@ function SensorTemplate({ template }: { template: SensorTemplate }) {
   );
 }
 
-function SensorNode({
+function SensorNodeCard({
   node,
   onMove,
   onToggleConnection,
@@ -142,14 +142,12 @@ function SensorNode({
         left: node.x,
         top: node.y,
         opacity: isDragging ? 0.5 : 1,
-      }}
-      className="bg-zinc-900 border-2 rounded-xl p-4 shadow-lg cursor-move min-w-[180px]"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      style={{
         borderColor: node.color,
         boxShadow: `0 0 20px ${node.color}40`,
       }}
+      className="bg-white dark:bg-zinc-900 border-2 rounded-xl p-4 shadow-lg cursor-move min-w-[180px]"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -159,13 +157,13 @@ function SensorNode({
           >
             <Icon className="w-4 h-4" style={{ color: node.color }} />
           </div>
-          <span className="font-medium text-sm">{labelMap[node.type] || node.label}</span>
+          <span className="font-medium text-sm text-gray-900 dark:text-white">{labelMap[node.type] || node.label}</span>
         </div>
         <button
           onClick={() => onDelete(node.id)}
-          className="p-1 hover:bg-zinc-800 rounded transition-colors"
+          className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded transition-colors"
         >
-          <Trash2 className="w-4 h-4 text-zinc-500 hover:text-red-500" />
+          <Trash2 className="w-4 h-4 text-gray-400 dark:text-zinc-500 hover:text-red-500" />
         </button>
       </div>
 
@@ -174,7 +172,7 @@ function SensorNode({
         className={`w-full flex items-center justify-center gap-2 py-2 rounded-lg transition-all ${
           node.connected
             ? 'bg-[#00809D]/20 text-[#00809D] border border-[#00809D]/30'
-            : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
+            : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500 border border-gray-200 dark:border-zinc-700'
         }`}
       >
         {node.connected ? (
@@ -230,16 +228,16 @@ function MobileSensorPicker({
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-        className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-zinc-900 border-t border-zinc-800 p-6 max-h-[80vh] overflow-y-auto"
+        className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800 p-6 max-h-[80vh] overflow-y-auto"
       >
         <div className="max-w-md mx-auto">
           {/* Handle Bar */}
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-1 bg-zinc-700 rounded-full" />
+            <div className="w-12 h-1 bg-gray-300 dark:bg-zinc-700 rounded-full" />
           </div>
 
-          <h2 className="text-xl font-bold mb-1">{t.sensors.catalog || 'Select Sensor'}</h2>
-          <p className="text-zinc-400 text-sm mb-6">{t.sensors.subtitle}</p>
+          <h2 className="text-xl font-bold mb-1 text-gray-900 dark:text-white">{t.sensors.catalog || 'Select Sensor'}</h2>
+          <p className="text-gray-500 dark:text-zinc-400 text-sm mb-6">{t.sensors.subtitle}</p>
 
           {/* Sensor Grid */}
           <div className="grid grid-cols-2 gap-3">
@@ -266,7 +264,7 @@ function MobileSensorPicker({
                   >
                     <Icon className="w-6 h-6" style={{ color: template.color }} />
                   </div>
-                  <span className="text-xs font-semibold text-center text-white">
+                  <span className="text-xs font-semibold text-center text-gray-900 dark:text-white">
                     {labelMap[template.type] || template.label}
                   </span>
                 </motion.button>
@@ -284,7 +282,6 @@ function MobilePuzzleGrid({
   onToggleConnection,
   onDelete,
   onAddSensorClick,
-  templates,
 }: {
   nodes: SensorNode[];
   onToggleConnection: (id: string) => void;
@@ -321,7 +318,7 @@ function MobilePuzzleGrid({
       <motion.button
         whileTap={{ scale: 0.98 }}
         onClick={onAddSensorClick}
-        className="w-full py-4 px-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg"
+        className="w-full py-4 px-4 bg-gradient-to-r from-[#00809D] to-[#FF7601] rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg"
       >
         <Plus className="w-5 h-5" />
         <span>Add Sensor</span>
@@ -330,8 +327,8 @@ function MobilePuzzleGrid({
       {/* Puzzle Stack */}
       {nodes.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <Gauge className="w-16 h-16 mx-auto mb-4 opacity-20 text-zinc-600" />
-          <p className="text-zinc-500 text-sm">{t.sensors.dragInstruction}</p>
+          <Gauge className="w-16 h-16 mx-auto mb-4 opacity-20 text-gray-400 dark:text-zinc-600" />
+          <p className="text-gray-500 dark:text-zinc-500 text-sm">{t.sensors.dragInstruction}</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -457,20 +454,20 @@ function Workspace({ nodes, onDrop, onMove, onToggleConnection, onDelete }: {
     <div
       id="workspace"
       ref={drop}
-      className="relative flex-1 bg-zinc-950 border-2 border-dashed border-zinc-800 rounded-xl overflow-hidden"
+      className="relative flex-1 bg-gray-50 dark:bg-zinc-950 border-2 border-dashed border-gray-300 dark:border-zinc-800 rounded-xl overflow-hidden"
       style={{ minHeight: '600px' }}
     >
       {nodes.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-zinc-600">
+          <div className="text-center text-gray-400 dark:text-zinc-600">
             <Gauge className="w-16 h-16 mx-auto mb-4 opacity-20" />
-            <p className="text-lg">{t.sensors.dragInstruction}</p>
+            <p className="text-lg text-gray-500 dark:text-zinc-600">{t.sensors.dragInstruction}</p>
           </div>
         </div>
       )}
 
       {nodes.map((node) => (
-        <SensorNode
+        <SensorNodeCard
           key={node.id}
           node={node}
           onMove={onMove}
@@ -491,7 +488,7 @@ export function SensorCanvasPage() {
   const handleDrop = (template: SensorTemplate, x: number, y: number) => {
     const sizes = ['small', 'small', 'medium', 'large'] as const;
     const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-    
+
     const newNode: SensorNode = {
       id: `${template.type}-${Date.now()}`,
       type: template.type,
@@ -509,7 +506,7 @@ export function SensorCanvasPage() {
   const handleAddSensor = (template: SensorTemplate) => {
     const sizes = ['small', 'small', 'medium', 'large'] as const;
     const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-    
+
     const newNode: SensorNode = {
       id: `${template.type}-${Date.now()}`,
       type: template.type,
@@ -549,11 +546,11 @@ export function SensorCanvasPage() {
 
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-black text-white p-4 pb-20">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-4 pb-20">
         <div className="max-w-md mx-auto">
           <header className="mb-6">
             <h1 className="text-2xl font-bold mb-1">{t.sensors.title}</h1>
-            <p className="text-zinc-400 text-sm">{t.sensors.subtitle}</p>
+            <p className="text-gray-500 dark:text-zinc-400 text-sm">{t.sensors.subtitle}</p>
           </header>
 
           <MobilePuzzleGrid
@@ -581,11 +578,11 @@ export function SensorCanvasPage() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-black text-white p-6">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 text-gray-900 dark:text-white p-6">
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
             <h1 className="text-3xl font-bold mb-2">{t.sensors.title}</h1>
-            <p className="text-zinc-400">{t.sensors.subtitle}</p>
+            <p className="text-gray-500 dark:text-zinc-400">{t.sensors.subtitle}</p>
           </header>
 
           <div className="flex gap-6">
@@ -598,7 +595,7 @@ export function SensorCanvasPage() {
                 </h3>
                 <div className="space-y-3">
                   {groupTemplates.map((template) => (
-                    <SensorTemplate key={template.type} template={template} />
+                    <SensorTemplateCard key={template.type} template={template} />
                   ))}
                 </div>
               </div>
@@ -610,7 +607,7 @@ export function SensorCanvasPage() {
                 </h3>
                 <div className="space-y-3">
                   {individualTemplates.map((template) => (
-                    <SensorTemplate key={template.type} template={template} />
+                    <SensorTemplateCard key={template.type} template={template} />
                   ))}
                 </div>
               </div>

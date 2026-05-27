@@ -1,5 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Language, translations, Translations } from '../i18n/translations';
+
+type Theme = 'light' | 'dark';
 
 interface UserData {
   name: string;
@@ -13,6 +15,8 @@ interface AppContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
+  theme: Theme;
+  toggleTheme: () => void;
   t: Translations;
   userData: UserData | null;
   setUserData: (data: UserData) => void;
@@ -24,9 +28,22 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
   const [userData, setUserDataState] = useState<UserData | null>(null);
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('theme') as Theme | null;
+    return saved ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'th' : 'en');
+  };
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
   const setUserData = (data: UserData) => {
@@ -41,6 +58,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     language,
     setLanguage,
     toggleLanguage,
+    theme,
+    toggleTheme,
     t: translations[language],
     userData,
     setUserData,
