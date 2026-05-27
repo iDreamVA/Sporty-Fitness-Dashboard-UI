@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Thermometer, Gauge, Activity, Wifi, WifiOff, Trash2, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useIsMobile } from '../components/ui/use-mobile';
@@ -193,165 +193,228 @@ function SensorNode({
   );
 }
 
-function MobilePuzzleGrid({ nodes, onToggleConnection, onDelete, selectedSensors, onToggleSensorSelection, templates }: {
+function MobileSensorPicker({
+  templates,
+  onSelect,
+  onClose,
+}: {
+  templates: SensorTemplate[];
+  onSelect: (template: SensorTemplate) => void;
+  onClose: () => void;
+}) {
+  const { t } = useApp();
+
+  const labelMap: Record<string, string> = {
+    temperature: t.sensors.temperature,
+    gyroscope: t.sensors.gyroscope,
+    heartRate: t.sensors.heartRate,
+    armGroup: t.sensors.armSensors,
+    backGroup: t.sensors.backSensors,
+    legGroup: t.sensors.legSensors,
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/50 z-40"
+      />
+
+      {/* Floating Modal */}
+      <motion.div
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+        className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-zinc-900 border-t border-zinc-800 p-6 max-h-[80vh] overflow-y-auto"
+      >
+        <div className="max-w-md mx-auto">
+          {/* Handle Bar */}
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-1 bg-zinc-700 rounded-full" />
+          </div>
+
+          <h2 className="text-xl font-bold mb-1">{t.sensors.catalog || 'Select Sensor'}</h2>
+          <p className="text-zinc-400 text-sm mb-6">{t.sensors.subtitle}</p>
+
+          {/* Sensor Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {templates.map((template) => {
+              const Icon = template.icon;
+              return (
+                <motion.button
+                  key={template.type}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    onSelect(template);
+                    onClose();
+                  }}
+                  className="p-4 rounded-2xl transition-all flex flex-col items-center gap-2"
+                  style={{
+                    backgroundColor: `${template.color}20`,
+                    border: `2px solid ${template.color}40`,
+                  }}
+                  whileHover={{ scale: 1.05, borderColor: template.color }}
+                >
+                  <div
+                    className="p-3 rounded-xl"
+                    style={{ backgroundColor: `${template.color}30` }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: template.color }} />
+                  </div>
+                  <span className="text-xs font-semibold text-center text-white">
+                    {labelMap[template.type] || template.label}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+      </motion.div>
+    </>
+  );
+}
+
+function MobilePuzzleGrid({
+  nodes,
+  onToggleConnection,
+  onDelete,
+  onAddSensorClick,
+  templates,
+}: {
   nodes: SensorNode[];
   onToggleConnection: (id: string) => void;
   onDelete: (id: string) => void;
-  selectedSensors: Set<string>;
-  onToggleSensorSelection: (type: string) => void;
+  onAddSensorClick: () => void;
   templates: SensorTemplate[];
 }) {
   const { t } = useApp();
 
-  const getGridSize = (size?: string) => {
+  const labelMap: Record<string, string> = {
+    temperature: t.sensors.temperature,
+    gyroscope: t.sensors.gyroscope,
+    heartRate: t.sensors.heartRate,
+    armGroup: t.sensors.armSensors,
+    backGroup: t.sensors.backSensors,
+    legGroup: t.sensors.legSensors,
+  };
+
+  const getPuzzleHeight = (size?: string) => {
     switch (size) {
       case 'large':
-        return 'col-span-2 row-span-2';
+        return 'min-h-[200px]';
       case 'medium':
-        return 'col-span-2 row-span-1';
+        return 'min-h-[140px]';
       case 'small':
       default:
-        return 'col-span-1 row-span-1';
+        return 'min-h-[100px]';
     }
   };
 
   return (
-    <div className="w-full space-y-6">
-      {/* Catalog Section */}
-      <div className="bg-zinc-900/50 rounded-xl p-4 border border-zinc-800">
-        <h3 className="text-sm font-semibold text-zinc-400 mb-3">
-          {t.sensors.catalog || 'Select Sensors'}
-        </h3>
-        <div className="grid grid-cols-2 gap-2">
-          {templates.map((template) => {
-            const Icon = template.icon;
-            const isSelected = selectedSensors.has(template.type);
-            const labelMap: Record<string, string> = {
-              temperature: t.sensors.temperature,
-              gyroscope: t.sensors.gyroscope,
-              heartRate: t.sensors.heartRate,
-              armGroup: t.sensors.armSensors,
-              backGroup: t.sensors.backSensors,
-              legGroup: t.sensors.legSensors,
-            };
+    <div className="w-full space-y-4">
+      {/* Top Bar with Add Button */}
+      <motion.button
+        whileTap={{ scale: 0.98 }}
+        onClick={onAddSensorClick}
+        className="w-full py-4 px-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl font-semibold text-white flex items-center justify-center gap-2 shadow-lg"
+      >
+        <Plus className="w-5 h-5" />
+        <span>Add Sensor</span>
+      </motion.button>
 
-            return (
-              <motion.button
-                key={template.type}
-                onClick={() => onToggleSensorSelection(template.type)}
-                whileTap={{ scale: 0.95 }}
-                className={`p-3 rounded-lg transition-all border-2 flex items-center gap-2 ${
-                  isSelected
-                    ? 'bg-zinc-800 border-blue-500 text-white'
-                    : 'bg-zinc-900 border-zinc-700 text-zinc-300 hover:border-zinc-600'
-                }`}
-              >
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4" style={{ color: template.color }} />
-                    <span className="text-xs font-medium">{labelMap[template.type] || template.label}</span>
-                  </div>
-                </div>
-                <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                  isSelected
-                    ? 'bg-blue-500 border-blue-600'
-                    : 'border-zinc-600'
-                }`}>
-                  {isSelected && (
-                    <div className="w-1.5 h-1.5 bg-white rounded-[2px]" />
-                  )}
-                </div>
-              </motion.button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Workspace Grid Section */}
+      {/* Puzzle Stack */}
       {nodes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 text-center">
-          <Gauge className="w-12 h-12 mx-auto mb-3 opacity-30 text-zinc-600" />
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <Gauge className="w-16 h-16 mx-auto mb-4 opacity-20 text-zinc-600" />
           <p className="text-zinc-500 text-sm">{t.sensors.dragInstruction}</p>
         </div>
       ) : (
-        <div>
-          <h3 className="text-sm font-semibold text-zinc-400 mb-3">
-            {t.sensors.workspace || 'Workspace'}
-          </h3>
-          <div className="grid grid-cols-2 gap-3 auto-rows-[120px]">
-            {nodes.map((node) => {
-              const Icon = node.icon;
-              const labelMap: Record<string, string> = {
-                temperature: t.sensors.temperature,
-                gyroscope: t.sensors.gyroscope,
-                heartRate: t.sensors.heartRate,
-                armGroup: t.sensors.armSensors,
-                backGroup: t.sensors.backSensors,
-                legGroup: t.sensors.legSensors,
-              };
+        <div className="space-y-2">
+          {nodes.map((node, index) => {
+            const Icon = node.icon;
+            return (
+              <motion.div
+                key={node.id}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 20, opacity: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className={`${getPuzzleHeight(
+                  node.size
+                )} relative bg-gradient-to-br rounded-3xl p-5 cursor-pointer overflow-hidden group transition-all`}
+                style={{
+                  backgroundColor: node.color,
+                  opacity: 0.92,
+                  boxShadow: `0 8px 24px ${node.color}30`,
+                }}
+                whileHover={{ opacity: 1, scale: 1.02 }}
+              >
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/15 to-transparent rounded-3xl" />
 
-              return (
-                <motion.div
-                  key={node.id}
-                  className={`${getGridSize(node.size)} relative bg-gradient-to-br rounded-xl p-3 cursor-pointer overflow-hidden group transition-all`}
-                  style={{
-                    backgroundColor: node.color,
-                    opacity: 0.9,
+                {/* Delete Button - Top Right */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(node.id);
                   }}
-                  whileHover={{ opacity: 1, scale: 1.02 }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 0.9 }}
-                  exit={{ scale: 0, opacity: 0 }}
+                  className="absolute top-4 right-4 p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/20 rounded-full"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl" />
-                  
-                  <div className="relative h-full flex flex-col justify-between">
-                    <div className="flex items-start justify-between">
-                      <div className="flex flex-col gap-1">
-                        <Icon className="w-5 h-5 text-white" />
-                        <span className="text-xs font-semibold text-white leading-tight max-w-[70px]">
-                          {labelMap[node.type] || node.label}
-                        </span>
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDelete(node.id);
-                        }}
-                        className="p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/20 rounded"
-                      >
-                        <Trash2 className="w-3 h-3 text-white" />
-                      </button>
-                    </div>
+                  <Trash2 className="w-4 h-4 text-white" />
+                </button>
 
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleConnection(node.id);
-                      }}
-                      className={`text-xs font-medium py-1 px-2 rounded transition-all flex items-center justify-center gap-1 ${
-                        node.connected
-                          ? 'bg-white/30 text-white'
-                          : 'bg-black/20 text-white/60'
-                      }`}
+                {/* Content */}
+                <div className="relative h-full flex flex-col justify-between">
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="p-3 rounded-2xl flex-shrink-0"
+                      style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
                     >
-                      {node.connected ? (
-                        <>
-                          <Wifi className="w-3 h-3" />
-                          <span className="hidden xs:inline">{t.sensors.connected}</span>
-                        </>
-                      ) : (
-                        <>
-                          <WifiOff className="w-3 h-3" />
-                          <span className="hidden xs:inline">{t.sensors.disconnected}</span>
-                        </>
-                      )}
-                    </button>
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-bold text-white">
+                        {labelMap[node.type] || node.label}
+                      </h3>
+                      <p className="text-xs text-white/70">
+                        {node.connected ? 'Connected' : 'Disconnected'}
+                      </p>
+                    </div>
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+
+                  {/* Connection Toggle */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleConnection(node.id);
+                    }}
+                    className={`mt-4 text-xs font-semibold py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-2 w-full ${
+                      node.connected
+                        ? 'bg-white/30 text-white'
+                        : 'bg-black/20 text-white/70 hover:bg-black/30'
+                    }`}
+                  >
+                    {node.connected ? (
+                      <>
+                        <Wifi className="w-3 h-3" />
+                        <span>{t.sensors.connected}</span>
+                      </>
+                    ) : (
+                      <>
+                        <WifiOff className="w-3 h-3" />
+                        <span>{t.sensors.disconnected}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -423,7 +486,7 @@ export function SensorCanvasPage() {
   const { t } = useApp();
   const isMobile = useIsMobile();
   const [nodes, setNodes] = useState<SensorNode[]>([]);
-  const [selectedSensors, setSelectedSensors] = useState<Set<string>>(new Set());
+  const [showMobileModal, setShowMobileModal] = useState(false);
 
   const handleDrop = (template: SensorTemplate, x: number, y: number) => {
     const sizes = ['small', 'small', 'medium', 'large'] as const;
@@ -461,23 +524,6 @@ export function SensorCanvasPage() {
     setNodes((prev) => [...prev, newNode]);
   };
 
-  const handleToggleSensorSelection = (type: string) => {
-    setSelectedSensors((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(type)) {
-        newSet.delete(type);
-      } else {
-        newSet.add(type);
-        // Auto-add sensor to workspace when checked
-        const template = SENSOR_TEMPLATES.find((t) => t.type === type);
-        if (template) {
-          handleAddSensor(template);
-        }
-      }
-      return newSet;
-    });
-  };
-
   const handleMove = (id: string, x: number, y: number) => {
     setNodes((prev) =>
       prev.map((node) =>
@@ -503,7 +549,7 @@ export function SensorCanvasPage() {
 
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-black text-white p-4">
+      <div className="min-h-screen bg-black text-white p-4 pb-20">
         <div className="max-w-md mx-auto">
           <header className="mb-6">
             <h1 className="text-2xl font-bold mb-1">{t.sensors.title}</h1>
@@ -514,10 +560,20 @@ export function SensorCanvasPage() {
             nodes={nodes}
             onToggleConnection={handleToggleConnection}
             onDelete={handleDelete}
-            selectedSensors={selectedSensors}
-            onToggleSensorSelection={handleToggleSensorSelection}
+            onAddSensorClick={() => setShowMobileModal(true)}
             templates={SENSOR_TEMPLATES}
           />
+
+          {/* Sensor Picker Modal */}
+          <AnimatePresence>
+            {showMobileModal && (
+              <MobileSensorPicker
+                templates={SENSOR_TEMPLATES}
+                onSelect={handleAddSensor}
+                onClose={() => setShowMobileModal(false)}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </div>
     );
