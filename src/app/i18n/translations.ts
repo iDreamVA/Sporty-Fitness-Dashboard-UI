@@ -68,9 +68,13 @@ export interface Translations {
     temperature: string;
     gyroscope: string;
     heartRate: string;
+    humidity: string;
     dragInstruction: string;
     connected: string;
     disconnected: string;
+    noSensorsConnected: string;
+    noSensorsDesc: string;
+    goToSensorPage: string;
   };
   unit: {
     celsius: string;
@@ -167,9 +171,13 @@ export const translations: Record<Language, Translations> = {
       temperature: 'Temperature',
       gyroscope: 'Gyroscope',
       heartRate: 'Heart Rate',
+      humidity: 'Humidity',
       dragInstruction: 'Drag sensors from the sidebar to the workspace',
       connected: 'Connected',
       disconnected: 'Disconnected',
+      noSensorsConnected: 'No Sensors Connected',
+      noSensorsDesc: 'Add and connect sensors on the Sensor Configuration page to see live data here.',
+      goToSensorPage: 'Configure Sensors',
     },
     bodyTemperature: 'Temperature',
     caloriesBurned: 'Calories Burned',
@@ -274,9 +282,13 @@ export const translations: Record<Language, Translations> = {
       temperature: 'อุณหภูมิ',
       gyroscope: 'ไจโรสโคป',
       heartRate: 'อัตราการเต้นหัวใจ',
+      humidity: 'ความชื้น',
       dragInstruction: 'ลากเซ็นเซอร์จากแถบด้านข้างไปยังพื้นที่ทำงาน',
       connected: 'เชื่อมต่อแล้ว',
       disconnected: 'ยังไม่ได้เชื่อมต่อ',
+      noSensorsConnected: 'ยังไม่มีเซ็นเซอร์ที่เชื่อมต่อ',
+      noSensorsDesc: 'เพิ่มและเชื่อมต่อเซ็นเซอร์ที่หน้าการตั้งค่าเซ็นเซอร์เพื่อดูข้อมูลแบบเรียลไทม์',
+      goToSensorPage: 'ตั้งค่าเซ็นเซอร์',
     },
     bodyTemperature: 'อุณหภูมิร่างกาย',
     caloriesBurned: 'แคลอรี่ที่เผาผลาญ',
