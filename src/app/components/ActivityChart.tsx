@@ -28,16 +28,16 @@ export function ActivityChart({ data, title = 'Movement Intensity' }: ActivityCh
         <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <defs>
             <linearGradient id={gradientIdX} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#51553a" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#51553a" stopOpacity={0}/>
+              <stop offset="5%" stopColor="#00809D" stopOpacity={0.3}/>
+              <stop offset="95%" stopColor="#00809D" stopOpacity={0}/>
             </linearGradient>
             <linearGradient id={gradientIdY} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#a0b868" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#a0b868" stopOpacity={0}/>
+              <stop offset="5%" stopColor="#F3A26D" stopOpacity={0.3}/>
+              <stop offset="95%" stopColor="#F3A26D" stopOpacity={0}/>
             </linearGradient>
             <linearGradient id={gradientIdZ} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#7a8a45" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#7a8a45" stopOpacity={0}/>
+              <stop offset="5%" stopColor="#FF7601" stopOpacity={0.3}/>
+              <stop offset="95%" stopColor="#FF7601" stopOpacity={0}/>
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#27272a' : '#e5e7eb'} />
@@ -61,7 +61,7 @@ export function ActivityChart({ data, title = 'Movement Intensity' }: ActivityCh
           <Area
             type="monotone"
             dataKey="x"
-            stroke="#51553a"
+            stroke="#00809D"
             fillOpacity={1}
             fill={`url(#${gradientIdX})`}
             strokeWidth={2}
@@ -70,7 +70,7 @@ export function ActivityChart({ data, title = 'Movement Intensity' }: ActivityCh
           <Area
             type="monotone"
             dataKey="y"
-            stroke="#a0b868"
+            stroke="#F3A26D"
             fillOpacity={1}
             fill={`url(#${gradientIdY})`}
             strokeWidth={2}
@@ -79,7 +79,7 @@ export function ActivityChart({ data, title = 'Movement Intensity' }: ActivityCh
           <Area
             type="monotone"
             dataKey="z"
-            stroke="#7a8a45"
+            stroke="#FF7601"
             fillOpacity={1}
             fill={`url(#${gradientIdZ})`}
             strokeWidth={2}
@@ -90,15 +90,15 @@ export function ActivityChart({ data, title = 'Movement Intensity' }: ActivityCh
 
       <div className="flex gap-6 mt-4 justify-center">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#51553a' }} />
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#00809D' }} />
           <span className="text-gray-500 dark:text-zinc-400 text-sm">X-Axis</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#a0b868' }} />
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#F3A26D' }} />
           <span className="text-gray-500 dark:text-zinc-400 text-sm">Y-Axis</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#7a8a45' }} />
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF7601' }} />
           <span className="text-gray-500 dark:text-zinc-400 text-sm">Z-Axis</span>
         </div>
       </div>

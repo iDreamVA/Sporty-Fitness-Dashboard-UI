@@ -44,9 +44,9 @@ export function TemperatureChart({ data, title = 'Body Temperature' }: Temperatu
           <Line
             type="monotone"
             dataKey="temp"
-            stroke="#7a8a45"
+            stroke="#FF7601"
             strokeWidth={3}
-            dot={{ fill: '#7a8a45', r: 4 }}
+            dot={{ fill: '#FF7601', r: 4 }}
             activeDot={{ r: 6 }}
             isAnimationActive={true}
           />

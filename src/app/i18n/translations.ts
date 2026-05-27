@@ -171,7 +171,7 @@ export const translations: Record<Language, Translations> = {
       connected: 'Connected',
       disconnected: 'Disconnected',
     },
-    bodyTemperature: 'Body Temperature',
+    bodyTemperature: 'Temperature',
     caloriesBurned: 'Calories Burned',
     duration: 'Duration',
     activityLevel: 'Activity Level',

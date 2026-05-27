@@ -15,8 +15,8 @@ export function MainDashboardPage() {
 
   const getBMICategory = (bmi: number) => {
     if (bmi < 18.5) return { label: t.bmi.underweight, color: '#3b82f6' };
-    if (bmi < 25) return { label: t.bmi.normal, color: '#51553a' };
-    if (bmi < 30) return { label: t.bmi.overweight, color: '#7a8a45' };
+    if (bmi < 25) return { label: t.bmi.normal, color: '#00809D' };
+    if (bmi < 30) return { label: t.bmi.overweight, color: '#FF7601' };
     return { label: t.bmi.obese, color: '#ef4444' };
   };
 
@@ -42,10 +42,10 @@ export function MainDashboardPage() {
 
   // Mock posture data
   const postureAreas = [
-    { area: 'Neck', status: 'normal', icon: CheckCircle2, color: '#51553a' },
-    { area: 'Upper Back', status: 'warning', icon: AlertCircle, color: '#7a8a45' },
-    { area: 'Lower Back', status: 'normal', icon: CheckCircle2, color: '#51553a' },
-    { area: 'Shoulders', status: 'normal', icon: CheckCircle2, color: '#51553a' },
+    { area: 'Neck', status: 'normal', icon: CheckCircle2, color: '#00809D' },
+    { area: 'Upper Back', status: 'warning', icon: AlertCircle, color: '#FF7601' },
+    { area: 'Lower Back', status: 'normal', icon: CheckCircle2, color: '#00809D' },
+    { area: 'Shoulders', status: 'normal', icon: CheckCircle2, color: '#00809D' },
   ];
 
   return (
@@ -67,7 +67,7 @@ export function MainDashboardPage() {
                 {t.onboarding.kg} • {t.onboarding.age}: {userData.age} {t.onboarding.years}
               </p>
             </div>
-            <div className="hidden md:flex items-center justify-center w-12 h-12 bg-gradient-to-r from-[#51553a] to-[#7a8a45] rounded-full text-white font-bold">
+            <div className="hidden md:flex items-center justify-center w-12 h-12 bg-gradient-to-r from-[#00809D] to-[#FF7601] rounded-full text-white font-bold">
               {userData.name?.charAt(0) || 'U'}
             </div>
           </div>
@@ -95,7 +95,7 @@ export function MainDashboardPage() {
             {/* BMI Scale */}
             <div className="relative h-6 md:h-8 bg-gray-200 rounded-full overflow-hidden mb-3">
               <div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#a0b868] via-[#51553a] to-[#3a3a28] rounded-full"
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#F3A26D] via-[#00809D] to-[#3a3a28] rounded-full"
                 style={{ width: '100%' }}
               />
               <motion.div
@@ -165,7 +165,7 @@ export function MainDashboardPage() {
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100">{t.history.weightTrend}</h3>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <TrendingDown className="w-4 h-4 text-[#51553a]" />
+              <TrendingDown className="w-4 h-4 text-[#00809D]" />
               <span>{t.history.lastWeek}</span>
             </div>
           </div>
@@ -191,9 +191,9 @@ export function MainDashboardPage() {
                 <Line
                   type="monotone"
                   dataKey="weight"
-                  stroke="#51553a"
+                  stroke="#00809D"
                   strokeWidth={3}
-                  dot={{ fill: '#51553a', r: 5 }}
+                  dot={{ fill: '#00809D', r: 5 }}
                   activeDot={{ r: 7 }}
                 />
               </LineChart>

@@ -94,9 +94,9 @@ export function RealtimeDashboardPage() {
               <h1 className="text-3xl font-bold mb-2">{t.subtitle}</h1>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-[#7a8a45]/20 px-4 py-2 rounded-full border border-[#7a8a45]/30">
-                <div className="w-2 h-2 bg-[#7a8a45] rounded-full animate-pulse" />
-                <span className="text-[#7a8a45] text-sm font-semibold">{t.liveStatus}</span>
+              <div className="flex items-center gap-2 bg-[#FF7601]/20 px-4 py-2 rounded-full border border-[#FF7601]/30">
+                <div className="w-2 h-2 bg-[#FF7601] rounded-full animate-pulse" />
+                <span className="text-[#FF7601] text-sm font-semibold">{t.liveStatus}</span>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ export function RealtimeDashboardPage() {
             icon={Thermometer}
             trend="up"
             trendValue="+0.3°C"
-            color="#7a8a45"
+            color="#FF7601"
           />
           <MetricCard
             title={t.caloriesBurned}
@@ -120,7 +120,7 @@ export function RealtimeDashboardPage() {
             icon={Zap}
             trend="up"
             trendValue="+12%"
-            color="#51553a"
+            color="#00809D"
           />
           <MetricCard
             title={t.duration}
@@ -129,7 +129,7 @@ export function RealtimeDashboardPage() {
             icon={Timer}
             trend="stable"
             trendValue={t.trend.onPace}
-            color="#a0b868"
+            color="#F3A26D"
           />
           <MetricCard
             title={t.activityLevel}
@@ -138,7 +138,7 @@ export function RealtimeDashboardPage() {
             icon={Activity}
             trend="up"
             trendValue="+8%"
-            color="#51553a"
+            color="#00809D"
           />
         </div>
 
